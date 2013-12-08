@@ -20,7 +20,7 @@ using Oracle.DataAccess.Client;
 
 namespace Calvin.Data
 {
-    public class OracleOperation
+    public class OracleOperation : Calvin.Data.IDBOperation
     {
         private readonly string _connectionString;
 
@@ -47,7 +47,7 @@ namespace Calvin.Data
             connection.Close();
             connection.Dispose();
         }
-
+        #region ExecuteDataSet
         public DataSet ExecuteDataSet(string sql)
         {
             DataSet set;
@@ -269,7 +269,7 @@ namespace Calvin.Data
             adapter.Fill(dataSet);
             return dataSet;
         }
-
+        #endregion
         public int ExecuteNonQuery(string sql)
         {
             int num;

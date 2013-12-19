@@ -1,44 +1,31 @@
-﻿/********************************************************************************************
- * 设计人员:     bananaxzw@qq.com
- * 功能描述:    oracle操作帮助                     
- *              
- * 注意事项:    
- *      
- * 版权所有:    
- * 
- * 修改记录:    修改时间        人员        修改备注
- *              ----------      ------      -------------------------------------------------
- *                           
- * ********************************************************************************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using Oracle.DataAccess.Client;
-
+using System.Data.OleDb;
 namespace Calvin.Data
 {
-    public class OracleOperation : Calvin.Data.IDBOperation
+   public class OleDbOperation
     {
+
         private readonly string _connectionString;
 
-        public OracleOperation(string connectionString)
+        public OleDbOperation(string connectionString)
         {
 
             _connectionString = connectionString;
         }
 
-        public OracleConnection GetConnection()
+        public OleDbConnection GetConnection()
         {
-            OracleConnection conn = new OracleConnection();
+            OleDbConnection conn = new OleDbConnection();
             conn.ConnectionString = _connectionString;
             conn.Open();
             return conn;
         }
 
-        public void RecycleConnection(OracleConnection connection)
+        public void RecycleConnection(OleDbConnection connection)
         {
             if (connection == null)
             {
@@ -51,7 +38,7 @@ namespace Calvin.Data
         public DataSet ExecuteDataSet(string sql)
         {
             DataSet set;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 set = ExecuteDataSet(sql, CommandType.Text, connection, null, null);
@@ -63,7 +50,7 @@ namespace Calvin.Data
             return set;
         }
 
-        public static DataSet ExecuteDataSet(string sql, OracleConnection connection)
+        public static DataSet ExecuteDataSet(string sql, OleDbConnection connection)
         {
             return ExecuteDataSet(sql, CommandType.Text, connection, null, null);
         }
@@ -71,7 +58,7 @@ namespace Calvin.Data
         public DataSet ExecuteDataSet(string sql, CommandType commandType)
         {
             DataSet set;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 set = ExecuteDataSet(sql, commandType, connection, null, null);
@@ -86,8 +73,8 @@ namespace Calvin.Data
         public DataSet ExecuteDataSet(string sql, IsolationLevel iso)
         {
             DataSet set2;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -110,10 +97,10 @@ namespace Calvin.Data
             return set2;
         }
 
-        public DataSet ExecuteDataSet(string sql, OracleParameter[] parameters)
+        public DataSet ExecuteDataSet(string sql, OleDbParameter[] parameters)
         {
             DataSet set;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 set = ExecuteDataSet(sql, CommandType.Text, connection, null, parameters);
@@ -125,17 +112,17 @@ namespace Calvin.Data
             return set;
         }
 
-        public static DataSet ExecuteDataSet(string sql, OracleConnection connection, OracleTransaction transaction)
+        public static DataSet ExecuteDataSet(string sql, OleDbConnection connection, OleDbTransaction transaction)
         {
             return ExecuteDataSet(sql, CommandType.Text, connection, transaction, null);
         }
 
-        public static DataSet ExecuteDataSet(string sql, OracleConnection connection, OracleParameter[] parameters)
+        public static DataSet ExecuteDataSet(string sql, OleDbConnection connection, OleDbParameter[] parameters)
         {
             return ExecuteDataSet(sql, CommandType.Text, connection, null, parameters);
         }
 
-        public static DataSet ExecuteDataSet(string sql, CommandType commandType, OracleConnection connection)
+        public static DataSet ExecuteDataSet(string sql, CommandType commandType, OleDbConnection connection)
         {
             return ExecuteDataSet(sql, commandType, connection, null, null);
         }
@@ -143,8 +130,8 @@ namespace Calvin.Data
         public DataSet ExecuteDataSet(string sql, CommandType commandType, IsolationLevel iso)
         {
             DataSet set2;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction    transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -167,10 +154,10 @@ namespace Calvin.Data
             return set2;
         }
 
-        public DataSet ExecuteDataSet(string sql, CommandType commandType, OracleParameter[] parameters)
+        public DataSet ExecuteDataSet(string sql, CommandType commandType, OleDbParameter[] parameters)
         {
             DataSet set;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 set = ExecuteDataSet(sql, commandType, connection, null, parameters);
@@ -182,11 +169,11 @@ namespace Calvin.Data
             return set;
         }
 
-        public DataSet ExecuteDataSet(string sql, OracleParameter[] parameters, IsolationLevel iso)
+        public DataSet ExecuteDataSet(string sql, OleDbParameter[] parameters, IsolationLevel iso)
         {
             DataSet set2;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -209,26 +196,26 @@ namespace Calvin.Data
             return set2;
         }
 
-        public static DataSet ExecuteDataSet(string sql, OracleConnection connection, OracleTransaction transaction, OracleParameter[] parameters)
+        public static DataSet ExecuteDataSet(string sql, OleDbConnection connection, OleDbTransaction transaction, OleDbParameter[] parameters)
         {
             return ExecuteDataSet(sql, CommandType.Text, connection, transaction, parameters);
         }
 
-        public static DataSet ExecuteDataSet(string sql, CommandType commandType, OracleConnection connection, OracleTransaction transaction)
+        public static DataSet ExecuteDataSet(string sql, CommandType commandType, OleDbConnection connection, OleDbTransaction transaction)
         {
             return ExecuteDataSet(sql, commandType, connection, transaction, null);
         }
 
-        public static DataSet ExecuteDataSet(string sql, CommandType commandType, OracleConnection connection, OracleParameter[] parameters)
+        public static DataSet ExecuteDataSet(string sql, CommandType commandType, OleDbConnection connection, OleDbParameter[] parameters)
         {
             return ExecuteDataSet(sql, commandType, connection, null, parameters);
         }
 
-        public DataSet ExecuteDataSet(string sql, CommandType commandType, OracleParameter[] parameters, IsolationLevel iso)
+        public DataSet ExecuteDataSet(string sql, CommandType commandType, OleDbParameter[] parameters, IsolationLevel iso)
         {
             DataSet set2;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -251,9 +238,9 @@ namespace Calvin.Data
             return set2;
         }
 
-        public static DataSet ExecuteDataSet(string sql, CommandType commandType, OracleConnection connection, OracleTransaction transaction, OracleParameter[] parameters)
+        public static DataSet ExecuteDataSet(string sql, CommandType commandType, OleDbConnection connection, OleDbTransaction transaction, OleDbParameter[] parameters)
         {
-            OracleCommand selectCommand = new OracleCommand
+            OleDbCommand selectCommand = new OleDbCommand
             {
                 Connection = connection,
                 CommandText = sql,
@@ -264,16 +251,17 @@ namespace Calvin.Data
             {
                 selectCommand.Parameters.AddRange(parameters);
             }
-            OracleDataAdapter adapter = new OracleDataAdapter(selectCommand);
+            OleDbDataAdapter adapter = new OleDbDataAdapter(selectCommand);
             DataSet dataSet = new DataSet();
             adapter.Fill(dataSet);
             return dataSet;
         }
         #endregion
+        #region ExecuteNonQuery
         public int ExecuteNonQuery(string sql)
         {
             int num;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 num = ExecuteNonQuery(sql, CommandType.Text, connection, null, null);
@@ -285,7 +273,7 @@ namespace Calvin.Data
             return num;
         }
 
-        public static int ExecuteNonQuery(string sql, OracleConnection connection)
+        public static int ExecuteNonQuery(string sql, OleDbConnection connection)
         {
             return ExecuteNonQuery(sql, CommandType.Text, connection, null, null);
         }
@@ -293,7 +281,7 @@ namespace Calvin.Data
         public int ExecuteNonQuery(string sql, CommandType commandType)
         {
             int num;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 num = ExecuteNonQuery(sql, commandType, connection, null, null);
@@ -308,8 +296,8 @@ namespace Calvin.Data
         public int ExecuteNonQuery(string sql, IsolationLevel iso)
         {
             int num2;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -332,10 +320,10 @@ namespace Calvin.Data
             return num2;
         }
 
-        public int ExecuteNonQuery(string sql, OracleParameter[] parameters)
+        public int ExecuteNonQuery(string sql, OleDbParameter[] parameters)
         {
             int num;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 num = ExecuteNonQuery(sql, CommandType.Text, connection, null, parameters);
@@ -347,17 +335,17 @@ namespace Calvin.Data
             return num;
         }
 
-        public static int ExecuteNonQuery(string sql, OracleConnection connection, OracleTransaction transaction)
+        public static int ExecuteNonQuery(string sql, OleDbConnection connection, OleDbTransaction transaction)
         {
             return ExecuteNonQuery(sql, CommandType.Text, connection, transaction, null);
         }
 
-        public static int ExecuteNonQuery(string sql, OracleConnection connection, OracleParameter[] parameters)
+        public static int ExecuteNonQuery(string sql, OleDbConnection connection, OleDbParameter[] parameters)
         {
             return ExecuteNonQuery(sql, CommandType.Text, connection, null, parameters);
         }
 
-        public static int ExecuteNonQuery(string sql, CommandType commandType, OracleConnection connection)
+        public static int ExecuteNonQuery(string sql, CommandType commandType, OleDbConnection connection)
         {
             return ExecuteNonQuery(sql, commandType, connection, null, null);
         }
@@ -365,8 +353,8 @@ namespace Calvin.Data
         public int ExecuteNonQuery(string sql, CommandType commandType, IsolationLevel iso)
         {
             int num2;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -389,10 +377,10 @@ namespace Calvin.Data
             return num2;
         }
 
-        public int ExecuteNonQuery(string sql, CommandType commandType, OracleParameter[] parameters)
+        public int ExecuteNonQuery(string sql, CommandType commandType, OleDbParameter[] parameters)
         {
             int num;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 num = ExecuteNonQuery(sql, commandType, connection, null, parameters);
@@ -404,11 +392,11 @@ namespace Calvin.Data
             return num;
         }
 
-        public int ExecuteNonQuery(string sql, OracleParameter[] parameters, IsolationLevel iso)
+        public int ExecuteNonQuery(string sql, OleDbParameter[] parameters, IsolationLevel iso)
         {
             int num2;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -431,26 +419,26 @@ namespace Calvin.Data
             return num2;
         }
 
-        public static int ExecuteNonQuery(string sql, OracleConnection connection, OracleTransaction transaction, OracleParameter[] parameters)
+        public static int ExecuteNonQuery(string sql, OleDbConnection connection, OleDbTransaction transaction, OleDbParameter[] parameters)
         {
             return ExecuteNonQuery(sql, CommandType.Text, connection, transaction, parameters);
         }
 
-        public static int ExecuteNonQuery(string sql, CommandType commandType, OracleConnection connection, OracleTransaction transaction)
+        public static int ExecuteNonQuery(string sql, CommandType commandType, OleDbConnection connection, OleDbTransaction transaction)
         {
             return ExecuteNonQuery(sql, commandType, connection, transaction, null);
         }
 
-        public static int ExecuteNonQuery(string sql, CommandType commandType, OracleConnection connection, OracleParameter[] parameters)
+        public static int ExecuteNonQuery(string sql, CommandType commandType, OleDbConnection connection, OleDbParameter[] parameters)
         {
             return ExecuteNonQuery(sql, commandType, connection, null, parameters);
         }
 
-        public int ExecuteNonQuery(string sql, CommandType commandType, OracleParameter[] parameters, IsolationLevel iso)
+        public int ExecuteNonQuery(string sql, CommandType commandType, OleDbParameter[] parameters, IsolationLevel iso)
         {
             int num2;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -473,9 +461,9 @@ namespace Calvin.Data
             return num2;
         }
 
-        public static int ExecuteNonQuery(string sql, CommandType commandType, OracleConnection connection, OracleTransaction transaction, OracleParameter[] parameters)
+        public static int ExecuteNonQuery(string sql, CommandType commandType, OleDbConnection connection, OleDbTransaction transaction, OleDbParameter[] parameters)
         {
-            OracleCommand command = new OracleCommand
+            OleDbCommand command = new OleDbCommand
             {
                 Connection = connection,
                 CommandText = sql,
@@ -488,45 +476,46 @@ namespace Calvin.Data
             }
             return command.ExecuteNonQuery();
         }
-
-        public static OracleDataReader ExecuteReader(string sql, OracleConnection connection)
+        #endregion
+        #region ExecuteReader
+        public static OleDbDataReader ExecuteReader(string sql, OleDbConnection connection)
         {
             return ExecuteReader(sql, CommandType.Text, connection, null, null);
         }
 
-        public static OracleDataReader ExecuteReader(string sql, OracleConnection connection, OracleTransaction transaction)
+        public static OleDbDataReader ExecuteReader(string sql, OleDbConnection connection, OleDbTransaction transaction)
         {
             return ExecuteReader(sql, CommandType.Text, connection, transaction, null);
         }
 
-        public static OracleDataReader ExecuteReader(string sql, OracleConnection connection, OracleParameter[] parameters)
+        public static OleDbDataReader ExecuteReader(string sql, OleDbConnection connection, OleDbParameter[] parameters)
         {
             return ExecuteReader(sql, CommandType.Text, connection, null, parameters);
         }
 
-        public static OracleDataReader ExecuteReader(string sql, CommandType commandType, OracleConnection connection)
+        public static OleDbDataReader ExecuteReader(string sql, CommandType commandType, OleDbConnection connection)
         {
             return ExecuteReader(sql, commandType, connection, null, null);
         }
 
-        public static OracleDataReader ExecuteReader(string sql, OracleConnection connection, OracleTransaction transaction, OracleParameter[] parameters)
+        public static OleDbDataReader ExecuteReader(string sql, OleDbConnection connection, OleDbTransaction transaction, OleDbParameter[] parameters)
         {
             return ExecuteReader(sql, CommandType.Text, connection, transaction, parameters);
         }
 
-        public static OracleDataReader ExecuteReader(string sql, CommandType commandType, OracleConnection connection, OracleTransaction transaction)
+        public static OleDbDataReader ExecuteReader(string sql, CommandType commandType, OleDbConnection connection, OleDbTransaction transaction)
         {
             return ExecuteReader(sql, commandType, connection, transaction, null);
         }
 
-        public static OracleDataReader ExecuteReader(string sql, CommandType commandType, OracleConnection connection, OracleParameter[] parameters)
+        public static OleDbDataReader ExecuteReader(string sql, CommandType commandType, OleDbConnection connection, OleDbParameter[] parameters)
         {
             return ExecuteReader(sql, commandType, connection, null, parameters);
         }
 
-        public static OracleDataReader ExecuteReader(string sql, CommandType commandType, OracleConnection connection, OracleTransaction transaction, OracleParameter[] parameters)
+        public static OleDbDataReader ExecuteReader(string sql, CommandType commandType, OleDbConnection connection, OleDbTransaction transaction, OleDbParameter[] parameters)
         {
-            OracleCommand command = new OracleCommand
+            OleDbCommand command = new OleDbCommand
             {
                 Connection = connection,
                 CommandText = sql,
@@ -539,11 +528,12 @@ namespace Calvin.Data
             }
             return command.ExecuteReader();
         }
-
+        #endregion
+        #region ExecuteScalar
         public object ExecuteScalar(string sql)
         {
             object obj2;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 obj2 = ExecuteScalar(sql, CommandType.Text, connection, null, null);
@@ -555,7 +545,7 @@ namespace Calvin.Data
             return obj2;
         }
 
-        public static object ExecuteScalar(string sql, OracleConnection connection)
+        public static object ExecuteScalar(string sql, OleDbConnection connection)
         {
             return ExecuteScalar(sql, CommandType.Text, connection, null, null);
         }
@@ -563,7 +553,7 @@ namespace Calvin.Data
         public object ExecuteScalar(string sql, CommandType commandType)
         {
             object obj2;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 obj2 = ExecuteScalar(sql, commandType, connection, null, null);
@@ -578,8 +568,8 @@ namespace Calvin.Data
         public object ExecuteScalar(string sql, IsolationLevel iso)
         {
             object obj3;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -602,10 +592,10 @@ namespace Calvin.Data
             return obj3;
         }
 
-        public object ExecuteScalar(string sql, OracleParameter[] parameters)
+        public object ExecuteScalar(string sql, OleDbParameter[] parameters)
         {
             object obj2;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 obj2 = ExecuteScalar(sql, CommandType.Text, connection, null, parameters);
@@ -617,17 +607,17 @@ namespace Calvin.Data
             return obj2;
         }
 
-        public static object ExecuteScalar(string sql, OracleConnection connection, OracleTransaction transaction)
+        public static object ExecuteScalar(string sql, OleDbConnection connection, OleDbTransaction transaction)
         {
             return ExecuteScalar(sql, CommandType.Text, connection, transaction, null);
         }
 
-        public static object ExecuteScalar(string sql, OracleConnection connection, OracleParameter[] parameters)
+        public static object ExecuteScalar(string sql, OleDbConnection connection, OleDbParameter[] parameters)
         {
             return ExecuteScalar(sql, CommandType.Text, connection, null, parameters);
         }
 
-        public static object ExecuteScalar(string sql, CommandType commandType, OracleConnection connection)
+        public static object ExecuteScalar(string sql, CommandType commandType, OleDbConnection connection)
         {
             return ExecuteScalar(sql, commandType, connection, null, null);
         }
@@ -635,8 +625,8 @@ namespace Calvin.Data
         public object ExecuteScalar(string sql, CommandType commandType, IsolationLevel iso)
         {
             object obj3;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -659,10 +649,10 @@ namespace Calvin.Data
             return obj3;
         }
 
-        public object ExecuteScalar(string sql, CommandType commandType, OracleParameter[] parameters)
+        public object ExecuteScalar(string sql, CommandType commandType, OleDbParameter[] parameters)
         {
             object obj2;
-            OracleConnection connection = this.GetConnection();
+            OleDbConnection connection = this.GetConnection();
             try
             {
                 obj2 = ExecuteScalar(sql, commandType, connection, null, parameters);
@@ -674,11 +664,11 @@ namespace Calvin.Data
             return obj2;
         }
 
-        public object ExecuteScalar(string sql, OracleParameter[] parameters, IsolationLevel iso)
+        public object ExecuteScalar(string sql, OleDbParameter[] parameters, IsolationLevel iso)
         {
             object obj3;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -701,26 +691,26 @@ namespace Calvin.Data
             return obj3;
         }
 
-        public static object ExecuteScalar(string sql, OracleConnection connection, OracleTransaction transaction, OracleParameter[] parameters)
+        public static object ExecuteScalar(string sql, OleDbConnection connection, OleDbTransaction transaction, OleDbParameter[] parameters)
         {
             return ExecuteScalar(sql, CommandType.Text, connection, transaction, parameters);
         }
 
-        public static object ExecuteScalar(string sql, CommandType commandType, OracleConnection connection, OracleTransaction transaction)
+        public static object ExecuteScalar(string sql, CommandType commandType, OleDbConnection connection, OleDbTransaction transaction)
         {
             return ExecuteScalar(sql, commandType, connection, transaction, null);
         }
 
-        public static object ExecuteScalar(string sql, CommandType commandType, OracleConnection connection, OracleParameter[] parameters)
+        public static object ExecuteScalar(string sql, CommandType commandType, OleDbConnection connection, OleDbParameter[] parameters)
         {
             return ExecuteScalar(sql, commandType, connection, null, parameters);
         }
 
-        public object ExecuteScalar(string sql, CommandType commandType, OracleParameter[] parameters, IsolationLevel iso)
+        public object ExecuteScalar(string sql, CommandType commandType, OleDbParameter[] parameters, IsolationLevel iso)
         {
             object obj3;
-            OracleConnection connection = this.GetConnection();
-            OracleTransaction transaction = null;
+            OleDbConnection connection = this.GetConnection();
+            OleDbTransaction transaction = null;
             try
             {
                 transaction = connection.BeginTransaction(iso);
@@ -743,9 +733,9 @@ namespace Calvin.Data
             return obj3;
         }
 
-        public static object ExecuteScalar(string sql, CommandType commandType, OracleConnection connection, OracleTransaction transaction, OracleParameter[] parameters)
+        public static object ExecuteScalar(string sql, CommandType commandType, OleDbConnection connection, OleDbTransaction transaction, OleDbParameter[] parameters)
         {
-            OracleCommand command = new OracleCommand
+            OleDbCommand command = new OleDbCommand
             {
                 Connection = connection,
                 CommandText = sql,
@@ -758,44 +748,6 @@ namespace Calvin.Data
             }
             return command.ExecuteScalar();
         }
-
-        public static bool GetBoolean(OracleDataReader reader, int index)
-        {
-            return (!(reader[index] is DBNull) && Convert.ToBoolean(reader[index]));
-        }
-
-        public static bool GetBoolean(OracleDataReader reader, string name)
-        {
-            return (!(reader[name] is DBNull) && Convert.ToBoolean(reader[name]));
-        }
-
-
-        public static DateTime? GetDateTime(OracleDataReader reader, int index)
-        {
-            return ((reader[index] is DBNull) ? null : new DateTime?(Convert.ToDateTime(reader[index])));
-        }
-
-        public static DateTime? GetDateTime(OracleDataReader reader, string name)
-        {
-            return ((reader[name] is DBNull) ? null : new DateTime?(Convert.ToDateTime(reader[name])));
-        }
-
-        public static int? GetInt32(OracleDataReader reader, int index)
-        {
-            return ((reader[index] is DBNull) ? null : new int?(Convert.ToInt32(reader[index])));
-        }
-
-        public static int? GetInt32(OracleDataReader reader, string name)
-        {
-            return ((reader[name] is DBNull) ? null : new int?(Convert.ToInt32(reader[name])));
-        }
-
-
-        public static object TranslateNullToDBNull(object obj)
-        {
-            return ((obj == null) ? DBNull.Value : obj);
-        }
-
-
+        #endregion
     }
 }

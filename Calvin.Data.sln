@@ -10,6 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "引用目录", "引用目�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalvinDataTest", "CalvinDataTest\CalvinDataTest.csproj", "{DD62BD6A-BE1F-482D-B5A5-089E4117096F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "zh-CHS", "zh-CHS", "{CA64F75E-83C0-48B2-A528-CE9C6F2126F9}"
+	ProjectSection(SolutionItems) = preProject
+		reference\Resources\zh-CHS\Oracle.DataAccess.resources.dll = reference\Resources\zh-CHS\Oracle.DataAccess.resources.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,5 +48,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CA64F75E-83C0-48B2-A528-CE9C6F2126F9} = {48DBC435-EFAD-411B-B733-41FF5A646FD0}
 	EndGlobalSection
 EndGlobal
